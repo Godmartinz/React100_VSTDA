@@ -4,22 +4,24 @@ class NewTodo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description:"",
-      priority:"",
-    }
-    this.handleChange=this.handleChange.bind(this);
-  }
-  
-  addNewToDo() {
-    this.props.addNewToDo(this.state);
-  }
-  handleChange(e) {
-    this.props({ [e.target.name]: e.target.value });
+      _inputDescription: "",
+      _inputPriority: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
+  handleChange(e) {
+    if (e.target.name === "description") {
+      this.setState({ _inputDescription: e.target.value });
+    } else if (e.target.name === "priority") {
+      this.setState({ _inputPriority: e.target.value });
+    } else if( e.target.id===0){
+      this.setState({id: e.target.value});
+    }
+    e.preventDefault();}
+ 
 
   render() {
-    
     return (
       <div className="col-sm-4">
         <div className="panel panel-default">
@@ -27,11 +29,11 @@ class NewTodo extends React.Component {
           <div className="panel-body form-group">
             <label htmlFor="new-task">I want to..</label>
             <textarea
-              type="textarea"
+              type="string"
               className="form-control"
-              id="description"
+              name="description"
               rows="4"
-              value={this.props.description}
+              value={this.state._inputDescription}
               onChange={this.handleChange}
             />
           </div>
@@ -39,19 +41,24 @@ class NewTodo extends React.Component {
             <label htmlFor="priority">How much of a priority is this?</label>
             <select
               className="form-control"
-              id="priority"
-              value={this.props.priority}
+              name="priority"
+              value={this.state._inputPriority}
               onChange={this.handleChange}
             >
-              <option id="low">low</option>
-              <option id="medium">medium</option>
-              <option id="high">high</option>
+              <option>Select a Priority</option>
+              <option value="1">low</option>
+              <option value="2">medium</option>
+              <option value="3">high</option>
             </select>
           </div>
           <div className="panel-footer text-center">
             <button
               className="btn btn-block btn-primary"
-              onClick={this.props.handleChange}
+              type="submit"
+              onClick={() =>
+                this.props.handleAdd(
+                  this.state._inputPriority,
+                  this.state._inputDescription)}
             >
               Add
             </button>

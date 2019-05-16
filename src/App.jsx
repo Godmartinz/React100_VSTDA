@@ -7,20 +7,48 @@ class App extends Component {
     super(props);
 
     this.state = {
-      description:"",
-      priority:"",
-      key:"",
       toDoList: [],
-      alert: ''
     };
-    this.handleChange =this.handleChange.bind(this);
+
+    this.handleAdd=this.handleAdd.bind(this);
+    this.handleSave=this.handleSave.bind(this);
 
   }
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  handleAdd(_inputPriority,_inputDescription) {
+    var id=0;
+    let newItem = {
+      id: id,
+      description: _inputDescription,
+      priority: _inputPriority,
+      key: Date.now(),
+      completedTodo: false,
+      display: !this.state.display
+    };
+    id++;
+    this.state.toDoList.push(newItem);
+    this.setState({ 
+      toDoList: this.state.toDoList
+    });
+  
+    console.log(this.state.toDoList);
   }
+  handleSave(_inputPriority, _inputDescription, id){
+    let change= this.state.toDoList;
+    for (let i=0; i<change.length;i++){
+      if(change[i].id==id){
+        change[i].priority=_inputPriority;
+        change[i].description=_inputDescription;
+        change[i].toggleDisplay=false;
+      }
+    }
+    this.setState({
+      toDoList: change})
+    }
 
+  
+  
   render() {
+    
     return (
       <div className="container">
         <div className="jumbotron">
@@ -28,8 +56,10 @@ class App extends Component {
           <h4>Track all of the things</h4>
         </div>
         <div className="row">
-        <NewTodo />
-        <ViewToDos />
+        <NewTodo handleAdd={this.handleAdd} />
+        <ViewToDos 
+        toDoList={this.state.toDoList}
+        handleSave={this.state.handleSave}/>
         
         </div>
         </div>
