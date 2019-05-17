@@ -15,16 +15,15 @@ class App extends Component {
 
   }
   handleAdd(_inputPriority,_inputDescription) {
-    var id=0;
+    var plug= Date.now();
     let newItem = {
-      id: id,
+      key: plug,
       description: _inputDescription,
       priority: _inputPriority,
-      key: Date.now(),
+      id: Date.now(),
       completedTodo: false,
       display: !this.state.display
     };
-    id++;
     this.state.toDoList.push(newItem);
     this.setState({ 
       toDoList: this.state.toDoList
@@ -36,9 +35,9 @@ class App extends Component {
     let change= this.state.toDoList;
     for (let i=0; i<change.length;i++){
       if(change[i].id==id){
-        change[i].priority=_inputPriority;
-        change[i].description=_inputDescription;
-        change[i].toggleDisplay=false;
+        change[i]._inputPriority=_inputPriority;
+        change[i]._inputDescription=_inputDescription;
+        change[i].display=false;
       }
     }
     this.setState({

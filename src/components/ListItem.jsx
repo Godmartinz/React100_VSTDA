@@ -54,7 +54,7 @@ class ListItem extends React.Component {
         {this.state.display ? (
           <div className="alert-success clearfix">
             <div className="form-group col-md-10">
-              <label htmlFor="edit-todo-text">Description</label>
+              <label htmlFor="update-todo-text">Description</label>
               <textarea
                 type="string"
                 className="form-control"
@@ -66,7 +66,7 @@ class ListItem extends React.Component {
               >{this.state._inputDescription}</textarea>
             </div>
             <div className="panel-body form-group">
-              <label htmlFor="priority">How much of a priority is this?</label>
+              <label htmlFor="update-todo-priority">How much of a priority is this?</label>
               <select
                 className="form-control"
                 name="priority"
@@ -80,11 +80,11 @@ class ListItem extends React.Component {
               </select>
             </div>
             <button
-              className="btn btn-success pull-right"
+              className="btn btn-success pull-right update-todo"
               name="button"
               type="submit"
               onClick={() =>
-                this.props.handleSave(
+                this.handleSave(
                   this.state._inputDescription,
                   this.state._inputPriority,
                   this.props.id,

@@ -30,7 +30,7 @@ class NewTodo extends React.Component {
             <label htmlFor="new-task">I want to..</label>
             <textarea
               type="string"
-              className="form-control"
+              className="form-control create-todo-text"
               name="description"
               rows="4"
               value={this.state._inputDescription}
@@ -40,7 +40,7 @@ class NewTodo extends React.Component {
           <div className="panel-body form-group">
             <label htmlFor="priority">How much of a priority is this?</label>
             <select
-              className="form-control"
+              className="form-control create-todo-priority"
               name="priority"
               value={this.state._inputPriority}
               onChange={this.handleChange}
