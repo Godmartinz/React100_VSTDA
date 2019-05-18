@@ -1,40 +1,25 @@
 import React from "react";
 
 class NewTodo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      _inputDescription: "",
-      _inputPriority: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
 
-  handleChange(e) {
-    if (e.target.name === "description") {
-      this.setState({ _inputDescription: e.target.value });
-    } else if (e.target.name === "priority") {
-      this.setState({ _inputPriority: e.target.value });
-    } else if( e.target.id===0){
-      this.setState({id: e.target.value});
-    }
-    e.preventDefault();}
- 
 
   render() {
+    const {item, priority, handleChange, handleSubmit}=this.props
     return (
       <div className="col-sm-4">
+        <form onSubmit= {(e) => handleSubmit(e)}>
         <div className="panel panel-default">
           <div className="panel-heading">Add New Todo</div>
           <div className="panel-body form-group">
             <label htmlFor="new-task">I want to..</label>
             <textarea
-              type="string"
+              type="text"
               className="form-control create-todo-text"
               name="description"
+              placeholder="add a todo item"
               rows="4"
-              value={this.state._inputDescription}
-              onChange={this.handleChange}
+              value={item}
+              onChange={handleChange}
             />
           </div>
           <div className="panel-body form-group">
@@ -42,8 +27,8 @@ class NewTodo extends React.Component {
             <select
               className="form-control create-todo-priority"
               name="priority"
-              value={this.state._inputPriority}
-              onChange={this.handleChange}
+              value={priority}
+              onChange={handleChange}
             >
               <option>Select a Priority</option>
               <option value="1">low</option>
@@ -53,19 +38,16 @@ class NewTodo extends React.Component {
           </div>
           <div className="panel-footer text-center">
             <button
-              className="btn btn-block btn-primary"
-              type="submit"
-              onClick={() =>
-                this.props.handleAdd(
-                  this.state._inputPriority,
-                  this.state._inputDescription)}
-            >
+              className="btn btn-block btn-primary create-todo"
+              type="submit">
               Add
             </button>
           </div>
         </div>
+        </form>
       </div>
     );
   }
 }
 export default NewTodo;
+

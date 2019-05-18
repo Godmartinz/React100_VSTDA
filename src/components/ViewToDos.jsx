@@ -1,40 +1,39 @@
 import React from "react";
 import ListItem from "./ListItem";
 
-const ViewToDos = props => {
-  return(
-  
+class ViewToDos extends React.Component {
+  render() {
+    const { toDoList, clearList, handleDelete } = this.props;
+    return (
       <div className="col-sm-8">
         <div className="panel panel-default">
           <div className="panel-heading">View Todos</div>
           <div className="panel-body">
-            <ul id="Todo-List">
-              {props.toDoList.map(newItem =>{
-                return(
-                  <li className="list-group-item text-capitalize d-flex justify-content-between my-2">
-                <ListItem
-                  key={newItem.key}
-                  description={newItem.description}
-                  priority={newItem.priority}
-                  handleSave={props.handleSave}
-                  
+            <ul id="list-group my-5 Todo-List">
+              {toDoList.map(item => {
+                return (
+                  <ListItem
+                    key={item.id}
+                    title={item.title}
+                    priority={item.priority}
+                    handleDelete={()=>handleDelete(item.id)}
                   />
-                  <div className="todo-icon">
-                  <span className="mx-2 text-success">
-                  <i className="fas fa-pen edit-todo" />
-                  </span>
-                  <span className="mx-2 text-danger">
-                  <i className="fas fa-trash edit-todo" />
-                  </span>
-                  </div>
-                  </li>
-                )
+                );
               })}
             </ul>
+            <button
+              className="btn btn-block btn-primary"
+              type="submit"
+              onClick={clearList}
+            >
+              Clear List
+            </button>
           </div>
         </div>
       </div>
     );
   }
+}
+
 
 export default ViewToDos;
