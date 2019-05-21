@@ -11,6 +11,7 @@
     "test": "npm run build && mocha test/.setup.js test/*.spec.js --exit"
   },
   "dependencies": {
+    "ajv-errors": "^1.0.1",
     "axios": "^0.16.1",
     "bluebird": "^3.5.0",
     "chai": "^3.5.0",
@@ -28,6 +29,7 @@
     "webpack": "^3.6.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
     "axios-mock-adapter": "^1.6.1",
     "babel": "^6.3.26",
     "babel-loader": "^7.1.1",

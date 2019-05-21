@@ -11,12 +11,15 @@ class App extends Component {
       id: uuid(),
       item: "",
       editItem: false,
-      priority: 0
+      priority: 0,
+      editedTitle:"",
+      editedPriority:0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearList = this.clearList.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit= this.handleEdit.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -34,15 +37,24 @@ class App extends Component {
       id: uuid(),
       editItem: false
     });
-    
   }
-  handleDelete(id){
-    
-    const filteredItems= this.state.toDoList.filter(item=> item.id!==id)
+  handleEdit(id) {
+    // e.preventDefault();
+    var copyList = [...this.state.toDoList];
+    const index = copyList.findIndex(item => item.id === id);
+   copyList[index].title = this.state.editedTitle;
+   copyList[index].priority = this.state.editedPriority;
+    this.setState({
+      toDoList: copyList
+    });
+  }
+
+  handleDelete(id) {
+    const filteredItems = this.state.toDoList.filter(item => item.id !== id);
 
     this.setState({
-      toDoList:filteredItems,
-    })
+      toDoList: filteredItems
+    });
   }
 
   handleChange(e) {
@@ -50,12 +62,16 @@ class App extends Component {
       this.setState({ item: e.target.value });
     } else if (e.target.name === "priority") {
       this.setState({ priority: e.target.value });
+    } else if (e.target.name === "edited-description") {
+      this.setState({ editedTitle: e.target.value });
+    } else if (e.target.name === "edited-priority") {
+      this.setState({ editedPriority: e.target.value });
     }
   }
-  clearList(){
+  clearList() {
     this.setState({
-      toDoList:[]
-    })
+      toDoList: []
+    });
   }
 
   render() {
@@ -72,10 +88,15 @@ class App extends Component {
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
           />
-          <ViewToDos 
-          toDoList={this.state.toDoList}
-          clearList={this.clearList}
-          handleDelete={this.handleDelete}/>
+          <ViewToDos
+            toDoList={this.state.toDoList}
+            clearList={this.clearList}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+            handleDelete={this.handleDelete}
+            handleEdit={this.handleEdit}
+            handleDisplayEdit={this.handleDisplayEdit}
+          />
         </div>
       </div>
     );
@@ -83,37 +104,3 @@ class App extends Component {
 }
 
 export default App;
-
-// <NewTodo handleAdd={this.handleAdd} />
-//         <ViewToDos
-//         toDoList={this.state.toDoList}
-//         handleSave={this.state.handleSave}/>
-// handleAdd(_inputPriority,_inputDescription) {
-//   var plug= Date.now();
-//   let newItem = {
-//     key: plug,
-//     description: _inputDescription,
-//     priority: _inputPriority,
-//     id: Date.now(),
-//     completedTodo: false,
-//     display: !this.state.display
-//   };
-//   this.state.toDoList.push(newItem);
-//   this.setState({
-//     toDoList: this.state.toDoList
-//   });
-
-//   console.log(this.state.toDoList);
-// }
-// handleSave(_inputPriority, _inputDescription, id){
-//   let change= this.state.toDoList;
-//   for (let i=0; i<change.length;i++){
-//     if(change[i].id==id){
-//       change[i]._inputPriority=_inputPriority;
-//       change[i]._inputDescription=_inputDescription;
-//       change[i].display=false;
-//     }
-//   }
-//   this.setState({
-//     toDoList: change})
-//   }

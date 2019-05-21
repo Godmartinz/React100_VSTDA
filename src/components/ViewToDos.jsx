@@ -1,9 +1,9 @@
-import React from "react";
+import React from  "react";
 import ListItem from "./ListItem";
 
 class ViewToDos extends React.Component {
   render() {
-    const { toDoList, clearList, handleDelete } = this.props;
+    const { toDoList, clearList, handleDelete, handleChange, handleEdit, handleSubmit } = this.props;
     return (
       <div className="col-sm-8">
         <div className="panel panel-default">
@@ -16,8 +16,14 @@ class ViewToDos extends React.Component {
                     key={item.id}
                     title={item.title}
                     priority={item.priority}
+                    editedTitle={item.editedTitle}
+                    editedPriority={item.editedPriority}
                     handleDelete={()=>handleDelete(item.id)}
-                  />
+                    handleSubmit={(e)=>handleSubmit(e)}
+                    handleDisplayEdit={()=>handleDisplayEdit(item.id)}
+                    handleEdit={()=>handleEdit(item.id, item.title, item.priority)}
+                    handleChange={(e)=>handleChange(e)}
+                    />
                 );
               })}
             </ul>
